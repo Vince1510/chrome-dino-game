@@ -7,201 +7,12 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Pacman Runner</title>
-    <style>
-      /* Reset & global styling */
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: #0d0d13;
-        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        user-select: none;
-        -webkit-user-select: none;
-        width: 100%;
-        height: 100%;
-      }
-
-      /* Responsive Excalibur Canvas Centering & Scaling */
-      canvas {
-        display: block !important;
-        margin: auto !important;
-        position: absolute !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        max-width: 100vw !important;
-        max-height: 100vh !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: contain !important;
-        image-rendering: pixelated;
-        image-rendering: crisp-edges;
-      }
-
-      /* Premium Glassmorphic Fullscreen Button */
-      #fullscreen-container {
-        position: fixed;
-        top: 60px;
-        right: 15px;
-        z-index: 10000;
-      }
-
-      .glass-btn {
-        background: rgba(26, 26, 36, 0.7);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: #fff;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 600;
-        font-size: 14px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .glass-btn:hover {
-        background: rgba(26, 26, 36, 0.9);
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: scale(1.05);
-      }
-
-      .glass-btn:active {
-        transform: scale(0.95);
-      }
-
-      .glass-btn svg {
-        width: 18px;
-        height: 18px;
-        fill: currentColor;
-      }
-
-      /* Mobile touch controls overlay */
-      #mobile-controls {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none; /* Let clicks pass through to canvas where needed */
-        z-index: 9999;
-        display: none; /* Hidden by default on desktop */
-      }
-
-      /* On touch devices or small screens, show mobile controls */
-      @media (pointer: coarse), (max-width: 1024px) {
-        #mobile-controls {
-          display: block;
-        }
-      }
-
-      .mobile-touch-zone {
-        position: absolute;
-        bottom: 5px;
-        pointer-events: auto; /* Allow interactions */
-        width: 80px;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: rgba(26, 26, 36, 0.6);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        color: #fff;
-        transition: all 0.15s ease;
-        touch-action: none; /* Prevent generic touch zoom/drag */
-      }
-
-      #btn-duck {
-        left: 20px;
-      }
-
-      #btn-jump {
-        right: 20px;
-      }
-
-      .mobile-touch-zone:active {
-        background: rgba(0, 150, 255, 0.4);
-        border-color: #00d2ff;
-        transform: scale(0.9);
-      }
-
-      .mobile-touch-zone svg {
-        width: 36px;
-        height: 36px;
-        fill: currentColor;
-      }
-
-      /* Rotate screen notice for portrait layout on mobile */
-      #rotate-notice {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #0d0d13;
-        z-index: 100000;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        text-align: center;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-
-      #rotate-notice svg {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 20px;
-        fill: #00d2ff;
-        animation: rotateDevice 2s infinite ease-in-out;
-      }
-
-      #rotate-notice h2 {
-        margin: 10px 0;
-        font-size: 22px;
-        letter-spacing: 1px;
-      }
-
-      #rotate-notice p {
-        color: #8a8a9e;
-        font-size: 15px;
-      }
-
-      @keyframes rotateDevice {
-        0% {
-          transform: rotate(0deg);
-        }
-        50% {
-          transform: rotate(-90deg);
-        }
-        100% {
-          transform: rotate(0deg);
-        }
-      }
-
-      /* Only show orientation warning on mobile portrait screens */
-      @media screen and (max-width: 1024px) and (orientation: portrait) {
-        #rotate-notice {
-          display: flex;
-        }
-      }
-    </style>
-    <script type="module" crossorigin src="/chrome-dino-game/assets/index-GQ9z6rb0.js"></script>
+    <link rel="icon" type="image/png" href="/chrome-dino-game/images/pacman/1.png" />
+    <script type="module" crossorigin src="/chrome-dino-game/assets/index-DAxlXD9r.js"></script>
+    <link rel="stylesheet" crossorigin href="/chrome-dino-game/assets/index-BGkXbT5Z.css">
   </head>
   <body>
-    <!-- Fullscreen Controller -->
+    <!-- fullscreen button -->
     <div id="fullscreen-container">
       <button class="glass-btn" id="btn-fullscreen">
         <svg viewBox="0 0 24 24">
@@ -213,16 +24,14 @@
       </button>
     </div>
 
-    <!-- Mobile Button Touch Layout -->
     <div id="mobile-controls">
-      <!-- Duck (Down Arrow) Button on Left -->
+      <!-- duck button -->
       <div class="mobile-touch-zone" id="btn-duck">
         <svg viewBox="0 0 24 24">
           <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
         </svg>
       </div>
-
-      <!-- Jump (Up Arrow) Button on Right -->
+      <!-- jump button -->
       <div class="mobile-touch-zone" id="btn-jump">
         <svg viewBox="0 0 24 24">
           <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z" />
@@ -230,8 +39,9 @@
       </div>
     </div>
 
-    <!-- Screen Rotation Prompt -->
+    <!-- rotate message for mobile -->
     <div id="rotate-notice">
+      <!-- animated mobile -->
       <svg viewBox="0 0 24 24">
         <path
           d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm4.5-3h-13V4h13v14z"
@@ -241,101 +51,30 @@
       <p>Speel de game horizontaal (landscape) voor de beste speelervaring!</p>
     </div>
 
+    <!-- game over screen -->
+    <div id="game-over-overlay">
+      <div class="game-over-card">
+        <h1>Game Over</h1>
+        <p class="final-score-text">
+          Score: <span id="final-score-val">0000</span>
+        </p>
+        <div
+          class="highscore-badge"
+          id="new-highscore-badge"
+          style="display: none"
+        >
+          🏆 NEW HIGHSCORE! 🏆
+        </div>
+        <button class="retry-btn" id="btn-retry">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+            />
+          </svg>
+          <span>Retry</span>
+        </button>
+      </div>
+    </div>
 
-    <!-- Mobile Touch Trigger Script -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const btnFullscreen = document.getElementById("btn-fullscreen");
-        const btnJump = document.getElementById("btn-jump");
-        const btnDuck = document.getElementById("btn-duck");
-
-        // --- FULLSCREEN & LANDSCAPE FORCING ---
-        btnFullscreen.addEventListener("click", () => {
-          if (document.fullscreenElement) {
-            // Als we al in fullscreen zijn, sluit het dan af!
-            const exitFS =
-              document.exitFullscreen ||
-              document.mozCancelFullScreen ||
-              document.webkitExitFullscreen ||
-              document.msExitFullscreen;
-            if (exitFS) {
-              exitFS.call(document);
-            }
-          } else {
-            // Open in fullscreen en lock horizontaal
-            const docEl = document.documentElement;
-            const requestFS =
-              docEl.requestFullscreen ||
-              docEl.mozRequestFullScreen ||
-              docEl.webkitRequestFullscreen ||
-              docEl.msRequestFullscreen;
-
-            if (requestFS) {
-              requestFS
-                .call(docEl)
-                .then(() => {
-                  if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock("landscape").catch((err) => {
-                      console.log("Orientation lock not supported:", err);
-                    });
-                  }
-                })
-                .catch((err) => {
-                  console.log("Fullscreen request failed:", err);
-                });
-            }
-          }
-        });
-
-        // Monitor fullscreen wisselingen en pas de knop dynamisch aan!
-        const handleFSChange = () => {
-          const isFS = !!document.fullscreenElement;
-          const btnText = document.querySelector("#btn-fullscreen span");
-          const btnIcon = document.querySelector("#btn-fullscreen svg");
-
-          if (isFS) {
-            btnText.textContent = "Exit Fullscreen";
-            btnIcon.innerHTML = `<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>`;
-          } else {
-            btnText.textContent = "Fullscreen Landscape";
-            btnIcon.innerHTML = `<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>`;
-          }
-        };
-
-        document.addEventListener("fullscreenchange", handleFSChange);
-        document.addEventListener("webkitfullscreenchange", handleFSChange);
-        document.addEventListener("mozfullscreenchange", handleFSChange);
-        document.addEventListener("MSFullscreenChange", handleFSChange);
-
-        // --- MOBILE TOUCH INPUTS ---
-
-        // Jump Trigger
-        btnJump.addEventListener("touchstart", (e) => {
-          e.preventDefault();
-          if (window.player) {
-            window.player.isMobileJumping = true;
-          }
-        });
-
-        btnJump.addEventListener("touchend", (e) => {
-          e.preventDefault();
-        });
-
-        // Duck (Crouch) Triggers
-        btnDuck.addEventListener("touchstart", (e) => {
-          e.preventDefault();
-          if (window.player) {
-            window.player.isMobileDucking = true;
-          }
-        });
-
-        btnDuck.addEventListener("touchend", (e) => {
-          e.preventDefault();
-          if (window.player) {
-            window.player.isMobileDucking = false;
-          }
-        });
-      });
-    </script>
   </body>
 </html>
