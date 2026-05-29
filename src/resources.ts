@@ -1,14 +1,14 @@
-// CLASS: ImageSource is de Excalibur blauwdruk om een losse afbeelding in te laden.
 import { ImageSource, Loader, Resource } from "excalibur";
 
-// OBJECT: Ons centrale opslagpunt voor alle assets.
-// PROPERTY: We splitsen Pacman nu op in 3 aparte frames (dicht, half-open, open).
 const Resources = {
-  pacmanClosed: new ImageSource("/images/pacman-art/pacman-right/1.png"),
-  pacmanHalf: new ImageSource("/images/pacman-art/pacman-right/2.png"),
-  pacmanOpen: new ImageSource("/images/pacman-art/pacman-right/3.png"),
+  pacmanClosed: new ImageSource("/images/pacman/1.png"),
+  pacmanHalf: new ImageSource("/images/pacman/2.png"),
+  pacmanOpen: new ImageSource("/images/pacman/3.png"),
 
-  redGhost: new ImageSource("/images/pacman-art/ghosts/blinky.png"),
+  blinky: new ImageSource("/images/ghosts/blinky.png"),
+  pinky: new ImageSource("/images/ghosts/pinky.png"),
+  inky: new ImageSource("/images/ghosts/inky.png"),
+  clyde: new ImageSource("/images/ghosts/clyde.png"),
 };
 
 const ResourceLoader = new Loader();
