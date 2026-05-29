@@ -198,7 +198,7 @@
         }
       }
     </style>
-    <script type="module" crossorigin src="/chrome-dino-game/assets/index-BrNX8gT3.js"></script>
+    <script type="module" crossorigin src="/chrome-dino-game/assets/index-GQ9z6rb0.js"></script>
   </head>
   <body>
     <!-- Fullscreen Controller -->
@@ -251,32 +251,61 @@
 
         // --- FULLSCREEN & LANDSCAPE FORCING ---
         btnFullscreen.addEventListener("click", () => {
-          const docEl = document.documentElement;
-          const requestFS =
-            docEl.requestFullscreen ||
-            docEl.mozRequestFullScreen ||
-            docEl.webkitRequestFullscreen ||
-            docEl.msRequestFullscreen;
+          if (document.fullscreenElement) {
+            // Als we al in fullscreen zijn, sluit het dan af!
+            const exitFS =
+              document.exitFullscreen ||
+              document.mozCancelFullScreen ||
+              document.webkitExitFullscreen ||
+              document.msExitFullscreen;
+            if (exitFS) {
+              exitFS.call(document);
+            }
+          } else {
+            // Open in fullscreen en lock horizontaal
+            const docEl = document.documentElement;
+            const requestFS =
+              docEl.requestFullscreen ||
+              docEl.mozRequestFullScreen ||
+              docEl.webkitRequestFullscreen ||
+              docEl.msRequestFullscreen;
 
-          if (requestFS) {
-            requestFS
-              .call(docEl)
-              .then(() => {
-                // Lock to landscape if screen.orientation API is supported
-                if (screen.orientation && screen.orientation.lock) {
-                  screen.orientation.lock("landscape").catch((err) => {
-                    console.log(
-                      "Orientation lock not fully supported/allowed:",
-                      err,
-                    );
-                  });
-                }
-              })
-              .catch((err) => {
-                console.log("Fullscreen request failed:", err);
-              });
+            if (requestFS) {
+              requestFS
+                .call(docEl)
+                .then(() => {
+                  if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock("landscape").catch((err) => {
+                      console.log("Orientation lock not supported:", err);
+                    });
+                  }
+                })
+                .catch((err) => {
+                  console.log("Fullscreen request failed:", err);
+                });
+            }
           }
         });
+
+        // Monitor fullscreen wisselingen en pas de knop dynamisch aan!
+        const handleFSChange = () => {
+          const isFS = !!document.fullscreenElement;
+          const btnText = document.querySelector("#btn-fullscreen span");
+          const btnIcon = document.querySelector("#btn-fullscreen svg");
+
+          if (isFS) {
+            btnText.textContent = "Exit Fullscreen";
+            btnIcon.innerHTML = `<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>`;
+          } else {
+            btnText.textContent = "Fullscreen Landscape";
+            btnIcon.innerHTML = `<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>`;
+          }
+        };
+
+        document.addEventListener("fullscreenchange", handleFSChange);
+        document.addEventListener("webkitfullscreenchange", handleFSChange);
+        document.addEventListener("mozfullscreenchange", handleFSChange);
+        document.addEventListener("MSFullscreenChange", handleFSChange);
 
         // --- MOBILE TOUCH INPUTS ---
 
