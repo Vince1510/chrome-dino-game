@@ -7,51 +7,43 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Pacman Runner</title>
+    <meta name="description" content="Pacman Runner – a fast-paced arcade runner. Dodge ghosts, collect dots, survive!" />
     <link rel="icon" type="image/png" href="/chrome-dino-game/images/pacman/1.png" />
-    <script type="module" crossorigin src="/chrome-dino-game/assets/index-DAxlXD9r.js"></script>
-    <link rel="stylesheet" crossorigin href="/chrome-dino-game/assets/index-BGkXbT5Z.css">
+    <script type="module" crossorigin src="/chrome-dino-game/assets/index-CTcEzjor.js"></script>
+    <link rel="stylesheet" crossorigin href="/chrome-dino-game/assets/index-BUmNx-4P.css">
   </head>
   <body>
-    <!-- fullscreen button -->
-    <div id="fullscreen-container">
-      <button class="glass-btn" id="btn-fullscreen">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
-          />
-        </svg>
-        <span>Fullscreen Landscape</span>
-      </button>
-    </div>
 
-    <div id="mobile-controls">
-      <!-- duck button -->
-      <div class="mobile-touch-zone" id="btn-duck">
-        <svg viewBox="0 0 24 24">
-          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-        </svg>
-      </div>
-      <!-- jump button -->
-      <div class="mobile-touch-zone" id="btn-jump">
-        <svg viewBox="0 0 24 24">
-          <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z" />
-        </svg>
+    <!-- ─── Portrait-mode warning (blocks all gameplay) ─────────────────── -->
+    <div id="portrait-warning">
+      <div class="portrait-card">
+        <div class="rotate-icon">⟳</div>
+        <p>Houd je scherm horizontaal om te spelen</p>
       </div>
     </div>
 
-    <!-- rotate message for mobile -->
-    <div id="rotate-notice">
-      <!-- animated mobile -->
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm4.5-3h-13V4h13v14z"
-        />
-      </svg>
-      <h2>Draai je apparaat</h2>
-      <p>Speel de game horizontaal (landscape) voor de beste speelervaring!</p>
+    <!-- ─── Start screen ─────────────────────────────────────────────────── -->
+    <div id="start-screen-overlay" class="active">
+      <div class="game-over-card">
+        <h1>PACMAN RUNNER</h1>
+
+        <!-- Desktop hint (hidden on touch devices via CSS) -->
+        <p class="final-score-text desktop-hint">
+          Gebruik <kbd>↑</kbd> / <kbd>↓</kbd> om te spelen
+        </p>
+
+        <!-- Mobile hint (hidden on non-touch devices via CSS) -->
+        <p class="final-score-text mobile-hint">
+          Tik de knoppen links &amp; rechts om te spelen
+        </p>
+
+        <div class="credits-container">
+          <p class="made-by-text">Made by Vince van Apeldoorn</p>
+        </div>
+      </div>
     </div>
 
-    <!-- game over screen -->
+    <!-- ─── Game-over screen ──────────────────────────────────────────────── -->
     <div id="game-over-overlay">
       <div class="game-over-card">
         <h1>Game Over</h1>
@@ -63,7 +55,7 @@
           id="new-highscore-badge"
           style="display: none"
         >
-          🏆 NEW HIGHSCORE! 🏆
+          NEW HIGHSCORE!
         </div>
         <button class="retry-btn" id="btn-retry">
           <svg viewBox="0 0 24 24">
@@ -73,7 +65,39 @@
           </svg>
           <span>Retry</span>
         </button>
+
+        <div class="credits-container">
+          <p class="made-by-text">Made by Vince van Apeldoorn</p>
+        </div>
       </div>
+    </div>
+
+    <!-- ─── Fullscreen button (always visible) ────────────────────────────── -->
+    <button id="btn-fullscreen" aria-label="Fullscreen">
+      <svg id="fs-icon-enter" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+      </svg>
+      <svg id="fs-icon-exit" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+        <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+      </svg>
+    </button>
+
+    <!-- ─── Mobile on-screen controls ───────────────────────────────────── -->
+    <!--
+      Round buttons, visible only on touch devices.
+      Left = Omlaag (Down), Right = Omhoog (Up).
+    -->
+    <div id="mobile-controls" aria-hidden="true">
+      <button id="btn-move-down" class="ctrl-btn ctrl-down" aria-label="Omlaag">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 10l5 5 5-5z"/>
+        </svg>
+      </button>
+      <button id="btn-move-up" class="ctrl-btn ctrl-up" aria-label="Omhoog">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 14l5-5 5 5z"/>
+        </svg>
+      </button>
     </div>
 
   </body>
